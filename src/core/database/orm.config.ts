@@ -3,7 +3,6 @@ import * as process from 'node:process';
 import type { DataSourceOptions } from 'typeorm/data-source/DataSourceOptions';
 import { config } from 'dotenv';
 
-// eslint-disable-next-line @typescript-eslint/no-unsafe-call
 config({
   path: '.env',
 });
@@ -21,11 +20,4 @@ export const typeOrmOptions: DataSourceOptions & { seeds: string[] } = {
 };
 export const dataSource = new DataSource(typeOrmOptions);
 
-dataSource
-  .initialize()
-  .then(() => {
-    console.log('Data Source has been initialized');
-  })
-  .catch((error) => {
-    console.error('Error during Data Source initialization', error);
-  });
+dataSource.initialize();

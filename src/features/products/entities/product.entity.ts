@@ -9,7 +9,13 @@ export class Product extends AbstractEntity {
   @Column()
   name: string;
 
-  @Column()
+  @Column({ unique: true })
+  slug: string;
+
+  @Column({ nullable: true })
+  cover_image: string;
+
+  @Column({ type: 'longtext' })
   description: string;
 
   @Column()
