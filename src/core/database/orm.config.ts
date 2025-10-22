@@ -4,10 +4,10 @@ import type { DataSourceOptions } from 'typeorm/data-source/DataSourceOptions';
 import { config } from 'dotenv';
 
 config({
-  path: '.env',
+  path: '.env'
 });
 
-export const typeOrmOptions: DataSourceOptions & { seeds: string[] } = {
+export default new DataSource({
   type: 'mysql',
   host: process.env.DB_HOST,
   port: Number(process.env.DB_PORT),
@@ -15,9 +15,6 @@ export const typeOrmOptions: DataSourceOptions & { seeds: string[] } = {
   username: process.env.DB_USERNAME,
   password: process.env.DB_PASSWORD,
   migrations: ['src/core/database/migrations/**'],
-  entities: ['dist/**/*.entity.js'],
-  seeds: ['dist/src/core/database/seeds/**.js'],
-};
-export const dataSource = new DataSource(typeOrmOptions);
-
-dataSource.initialize();
+  seeds: ['dist/core/database/seeders/**.js'],
+  entities: ['dist/**/*.entity.js']
+} as DataSourceOptions & { seeds: string[] });

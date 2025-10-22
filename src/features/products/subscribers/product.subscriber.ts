@@ -9,18 +9,13 @@ export class ProductSubscriber implements EntitySubscriberInterface<Product> {
   }
 
   beforeInsert(event: InsertEvent<Product>): void {
-    const entity = event.entity;
-    if (!entity) return;
-    const { name } = entity;
-    if (!name) return;
-    entity.slug = slugify(name, { lower: true });
+    const { name } = event.entity;
+    event.entity.slug = slugify(name, { lower: true });
   }
 
   beforeUpdate(event: UpdateEvent<Product>): void {
     const entity = event.entity;
-    if (!entity) return;
-    const { name } = entity;
-    if (!name) return;
-    entity.slug = slugify(name as string, { lower: true });
+    if (!entity || !entity.name) return;
+    entity.slug = slugify(entity.name as string, { lower: true });
   }
 }
