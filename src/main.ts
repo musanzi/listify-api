@@ -4,15 +4,14 @@ import { AppModule } from './app.module';
 import passport from 'passport';
 import session from 'express-session';
 
-const port = Number(process.env.PORT) as number;
-
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+  const port = Number(process.env.PORT) as number;
   app.useGlobalPipes(new ValidationPipe({ transform: true }));
   app.enableCors({
     origin: true,
-    methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
-    credentials: true
+    credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE']
   });
   app.use(
     session({
@@ -27,4 +26,4 @@ async function bootstrap() {
 
   await app.listen(port);
 }
-bootstrap().then();
+bootstrap();
